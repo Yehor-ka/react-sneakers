@@ -17,9 +17,12 @@ function App() {
         </div>
         
         <div className="d-flex">
-          <Card />
-          <Card />
-          <Card />
+          {[1,2,3,4].map(item => 
+          <Card 
+          title="Мужские Кроссовки Nike Blazer Mid" 
+          price={12999} 
+          imageUrl="/img/sneakers/sneakers.jpg"
+          onClick={() => console.log(item)} />)}
 
         </div>
         
