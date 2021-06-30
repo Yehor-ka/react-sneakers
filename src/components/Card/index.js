@@ -1,32 +1,77 @@
-import React from 'react'
-import styles from './Card.module.scss'
+import React from 'react';
+import ContentLoader from 'react-content-loader';
+import styles from './Card.module.scss';
 
+function Card({
+  title,
+  price,
+  imageUrl,
+  onPlus,
+  id,
+  onFavorite,
+  favorited = false,
+  added = false,
+  loading = false,
+}) {
+  const [isAdded, setIsAdded] = React.useState(added);
+  const [isFavorite, setIsFavorite] = React.useState(favorited);
 
-function Card({title, price, imageUrl, onPlus, id, onFavorite}) {
-    const [isAdded, setIsAdded] = React.useState(false);
+  const onClickPlus = () => {
+    onPlus({ id, title, price, imageUrl });
+    setIsAdded(!isAdded);
+  };
 
-    const onClickPlus = () => {
-        onPlus({title, price, imageUrl, id})
-        setIsAdded(!isAdded);
-    }
+  const onClickFavorite = () => {
+    onFavorite({ title, price, imageUrl, id });
+    setIsFavorite(!isFavorite);
+  };
 
-
-    return (
-        <div className={styles.card}>
-            <div className={styles.favorite}>
-                <img src="/img/heardVoid.svg" alt="Unliked" />
+  return (
+    <div className={styles.card}>
+      {loading ? (
+        <ContentLoader
+          speed={1}
+          width={150}
+          height={225}
+          viewBox="0 0 150 205"
+          backgroundColor="#f3f3f3"
+          foregroundColor="#ecebeb">
+          <rect x="0" y="420" rx="0" ry="0" width="85" height="36" />
+          <rect x="126" y="418" rx="20" ry="20" width="144" height="39" />
+          <rect x="147" y="131" rx="0" ry="0" width="1" height="0" />
+          <rect x="0" y="0" rx="10" ry="10" width="150" height="91" />
+          <rect x="0" y="107" rx="5" ry="5" width="150" height="15" />
+          <rect x="0" y="126" rx="5" ry="5" width="93" height="15" />
+          <rect x="0" y="178" rx="5" ry="5" width="80" height="24" />
+          <rect x="118" y="170" rx="5" ry="5" width="32" height="32" />
+        </ContentLoader>
+      ) : (
+        <>
+          <div className={styles.favorite}>
+            <img
+              onClick={onClickFavorite}
+              src={isFavorite ? '/img/liked.svg' : '/img/unliked.svg'}
+              alt="Unliked"
+            />
+          </div>
+          <img width={133} height={112} src={imageUrl} alt="Sneakers" />
+          <h5>{title}</h5>
+          <div className="d-flex justify-between align-center">
+            <div className="d-flex flex-column">
+              <span>Цена:</span>
+              <b>{price} грн.</b>
             </div>
-            <img width={133} height={112} src={imageUrl} alt="Sneakers" />
-            <h5>{title}</h5>
-            <div className="d-flex justify-between align-center">
-                <div className="d-flex flex-column">
-                <span>Цена:</span>
-                <b>{price} грн.</b>
-                </div>
-                <img className={styles.plus} onClick={onClickPlus} src={isAdded ? "/img/checked.svg" : "/img/plus.svg"} alt="Plus" />
-            </div>
-        </div>
-    )
+            <img
+              className={styles.plus}
+              onClick={onClickPlus}
+              src={isAdded ? '/img/checked.svg' : '/img/plus.svg'}
+              alt="Plus"
+            />
+          </div>
+        </>
+      )}
+    </div>
+  );
 }
 
-export default Card
+export default Card;
