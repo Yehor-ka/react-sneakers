@@ -1,10 +1,10 @@
 import React from 'react'
 import Card from '../components/Card';
+import AppContext from '../context'
 
-function Home({ items,
-    cartItems,
+function Home({ 
+    items,
     searchValue,
-    setSearchValue,
     onChangeSearchInput,
     onAddToFavorite,
     onAddToCart,
@@ -20,7 +20,6 @@ function Home({ items,
                 key={idx}
                 onPlus={(obj) => onAddToCart(obj)}
                 onFavorite={obj => onAddToFavorite(obj)}
-                added={cartItems.some(obj => Number(obj.id) === Number(item.id))}
                 {...item}
                 loading={isLoading}
               />
