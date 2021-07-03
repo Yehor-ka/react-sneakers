@@ -1,15 +1,17 @@
 import React from 'react';
-import Info from './Info';
-import AppContext from '../context';
+import Info from '../Info';
+import AppContext from '../../context';
 import axios from 'axios';
+import styles from "./Drawer.module.scss";
 
 const delay = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
-function Drawer({ onClose, sneakers = [], onRemove }) {
+function Drawer({ onClose, sneakers = [], onRemove, opened}) {
   const [isOrderCompleted, setIsOrderCompleted] = React.useState(false);
   const [OrderId, setOrderId] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
   const { cartItems, setCartItems } = React.useContext(AppContext);
+  const totalPrice = cartItems.reduce((sum, obj) => sum + obj.price , 0);
 
 
   const onClickOrder = async () => {
@@ -34,8 +36,8 @@ function Drawer({ onClose, sneakers = [], onRemove }) {
 
 
   return (
-    <div className="overlay">
-      <div className="drawer d-flex flex-column">
+    <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`}>
+      <div className={`${styles.drawer} d-flex flex-column`}>
         <h2 className="d-flex justify-between mb-30">
           Корзина{' '}
           <img onClick={onClose} className="removeBtn cu-p" src="/img/btnRemove.svg" alt="Remove" />
@@ -44,7 +46,7 @@ function Drawer({ onClose, sneakers = [], onRemove }) {
         {
             sneakers.length > 0 ?
             (<>
-                <div className="items">
+                <div className={`${styles.items}`}>
                 {sneakers.map((obj) => (
                 <div className="cartItem d-flex align-center mb-20">
                 <div
@@ -68,12 +70,12 @@ function Drawer({ onClose, sneakers = [], onRemove }) {
                     <li className="d-flex">
                         <span>Итого:</span>
                         <div></div>
-                        <b>4 500 грн.</b>
+                        <b>{totalPrice} грн.</b>
                     </li>
                     <li className="d-flex">
                         <span>Налог 5%:</span>
                         <div></div>
-                        <b>225 грн.</b>
+                        <b>{totalPrice * 0.05} грн.</b>
                     </li>
                     </ul>
                     <button disabled={isLoading} onClick={onClickOrder} className="greenBtn">
