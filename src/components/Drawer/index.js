@@ -40,7 +40,7 @@ function Drawer({ onClose, sneakers = [], onRemove, opened}) {
       <div className={`${styles.drawer} d-flex flex-column`}>
         <h2 className="d-flex justify-between mb-30">
           Корзина{' '}
-          <img onClick={onClose} className="removeBtn cu-p" src="/img/btnRemove.svg" alt="Remove" />
+          <img onClick={onClose} className="removeBtn cu-p" src="img/btnRemove.svg" alt="Remove" />
         </h2>
 
         {
@@ -59,7 +59,7 @@ function Drawer({ onClose, sneakers = [], onRemove, opened}) {
                 <img
                     onClick={() => onRemove(obj.id)}
                     className="removeBtn"
-                    src="/img/btnRemove.svg"
+                    src="img/btnRemove.svg"
                     alt="Remove"
                 />
                 </div>
