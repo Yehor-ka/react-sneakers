@@ -46,7 +46,7 @@ function Drawer({ onClose, sneakers = [], onRemove, opened}) {
         {
             sneakers.length > 0 ?
             (<>
-                <div className={`${styles.items}`}>
+                <div className={styles.items}>
                 {sneakers.map((obj) => (
                 <div className="cartItem d-flex align-center mb-20">
                 <div
